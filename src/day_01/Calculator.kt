@@ -20,7 +20,7 @@ fun readInput(onComplete: (firstList: List<Int>, secondList: List<Int>) -> Unit)
     onComplete(firstList, secondList)
 }
 
-fun main() {
+fun part1() {
     var sum = 0
 
     readInput { firstList, secondList ->
@@ -31,4 +31,21 @@ fun main() {
     }
 
     println(sum)
+}
+
+fun part2() {
+    var sum = 0
+
+    readInput { firstList, secondList ->
+        firstList.forEach { numberFromFirstList ->
+            val count = secondList.count { numberFromSecondList -> numberFromSecondList == numberFromFirstList }
+            sum += count * numberFromFirstList
+        }
+    }
+
+    println(sum)
+}
+
+fun main() {
+    part2()
 }
