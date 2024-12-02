@@ -15,36 +15,51 @@ fun readLevels(onComplete: (lines: List<List<Int>>) -> Unit) {
     )
 }
 
+fun isSafe(levels: List<Int>): Boolean {
+    var lastWasPositive: Boolean? = null
+
+    repeat(levels.size - 1) { index ->
+        val diff = levels[index] - levels[index + 1]
+
+        when {
+            lastWasPositive == true && diff < 0 ->
+                return false
+
+            lastWasPositive == false && diff > 0 ->
+                return false
+
+            abs(diff) !in (1..3) ->
+                return false
+        }
+
+        lastWasPositive = diff > 0
+    }
+
+    return true
+}
+
 fun main() {
+    var safeReports = 0
+
     readLevels { lines ->
-        var safeReports = 0
-
         lines.forEach { levels ->
-            var lastWasPositive: Boolean? = null
-            var isSafe = true
+            var isSafe = isSafe(levels)
 
-            repeat(levels.size - 1) { index ->
-                val diff = levels[index] - levels[index + 1]
-
-                when {
-                    lastWasPositive == true && diff < 0 ->
-                        isSafe = false
-
-                    lastWasPositive == false && diff > 0 ->
-                        isSafe = false
-
-                    abs(diff) !in (1..3) ->
-                        isSafe = false
+            repeat(levels.size) { index ->
+                val levelsWithoutOne = levels.run {
+                    subList(0, index) + subList(index + 1, size)
                 }
 
-                lastWasPositive = diff > 0
+                if (isSafe(levelsWithoutOne)) {
+                    isSafe = true
+                }
             }
 
             if (isSafe) {
                 safeReports++
             }
         }
-
-        println(safeReports)
     }
+
+    println(safeReports)
 }
