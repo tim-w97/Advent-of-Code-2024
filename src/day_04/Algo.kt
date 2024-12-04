@@ -20,7 +20,7 @@ fun main() {
     }
 
     // find vertical matches
-    repeat(lineLength - searchWord.length + 1) { lineIndex ->
+    repeat(lines.size - searchWord.length + 1) { lineIndex ->
         var possibleWord = ""
 
         repeat(searchWord.length) { wordIndex ->
