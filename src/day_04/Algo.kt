@@ -13,7 +13,7 @@ fun main() {
         repeat(line.length - searchWord.length) { index ->
             line.substring(index, index + searchWord.length).let { possibleWord ->
                 if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
-//                    count ++
+                    count ++
                 }
             }
         }
@@ -28,9 +28,11 @@ fun main() {
                 possibleWord += lines[wordIndex + lineIndex][lineLengthIndex]
             }
 
-            println(possibleWord)
+            if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
+                count ++
+            }
         }
-
-        println()
     }
+
+    println(count)
 }
