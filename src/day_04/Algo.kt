@@ -39,11 +39,4 @@ fun main() {
 
     // find diagonal matches
 
-    var diagonalString = ""
-
-    repeat(4) { index ->
-        diagonalString += lines[3 - index][index]
-    }
-
-    println(diagonalString)
 }
