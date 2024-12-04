@@ -20,13 +20,17 @@ fun main() {
     }
 
     // find vertical matches
-    repeat(lines.size - searchWord.length + 1) { lineIndex ->
-        var possibleWord = ""
+    for (lineLengthIndex in lineLength - 1 downTo 0) {
+        repeat(lines.size - searchWord.length + 1) { lineIndex ->
+            var possibleWord = ""
 
-        repeat(searchWord.length) { wordIndex ->
-            possibleWord += lines[wordIndex + lineIndex][lineLength - 1]
+            repeat(searchWord.length) { wordIndex ->
+                possibleWord += lines[wordIndex + lineIndex][lineLengthIndex]
+            }
+
+            println(possibleWord)
         }
 
-        println(possibleWord)
+        println()
     }
 }
