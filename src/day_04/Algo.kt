@@ -1,6 +1,7 @@
 package day_04
 
 import java.io.File
+import java.time.Year
 
 fun main() {
     val lines = File("src/day_04/input.txt").readLines()
@@ -8,18 +9,19 @@ fun main() {
     val searchWord = "XMAS"
     var count = 0
 
-    // find horizontal matches
+    // region find horizontal matches
     for (line in lines) {
         repeat(line.length - searchWord.length) { index ->
             line.substring(index, index + searchWord.length).let { possibleWord ->
                 if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
-                    count ++
+//                    count ++
                 }
             }
         }
     }
+    // endregion
 
-    // find vertical matches
+    // region find vertical matches
     for (lineLengthIndex in lineLength - 1 downTo 0) {
         repeat(lines.size - searchWord.length + 1) { lineIndex ->
             var possibleWord = ""
@@ -29,10 +31,19 @@ fun main() {
             }
 
             if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
-                count ++
+//                count ++
             }
         }
     }
+    // endregion
 
-    println(count)
+    // find diagonal matches
+
+    var diagonalString = ""
+
+    repeat(4) { index ->
+        diagonalString += lines[3 - index][index]
+    }
+
+    println(diagonalString)
 }
