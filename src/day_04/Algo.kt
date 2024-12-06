@@ -10,13 +10,18 @@ val width = lines[0].length
 val height = lines.size
 
 fun main() {
-    var matches = 0
+    var xmasWordCount = 0
+    var xShapedMasCount = 0
 
     repeat(height) { y ->
         repeat(width) { x ->
+            if (isXShapedMas(x, y)) {
+                xShapedMasCount ++
+            }
+
             repeat(3) { dirY ->
                 repeat(3) { dirX ->
-                    val isMatch = findWord(
+                    val isXmasWord = findWord(
                         x = x,
                         y = y,
                         dirX = dirX - 1,
@@ -24,15 +29,36 @@ fun main() {
                         wordIndex = 0
                     )
 
-                    if (isMatch) {
-                        matches++
+                    if (isXmasWord) {
+                        xmasWordCount++
                     }
                 }
             }
         }
     }
 
-    println(matches)
+    println("XMAS count: $xmasWordCount")
+    println("X shaped MAS count: $xShapedMasCount")
+}
+
+fun isXShapedMas(x: Int, y: Int): Boolean {
+    if (x < 1 || x >= width - 1 || y < 1 || y >= height - 1) {
+        return false
+    }
+
+    val word1 = StringBuilder()
+        .append(getLetter(x - 1, y - 1))
+        .append(getLetter(x, y))
+        .append(getLetter(x + 1, y + 1))
+        .toString()
+
+    val word2 = StringBuilder()
+        .append(getLetter(x - 1, y + 1))
+        .append(getLetter(x, y))
+        .append(getLetter(x + 1, y - 1))
+        .toString()
+
+    return (word1 == "MAS" || word1 == "SAM") && (word2 == "MAS" || word2 == "SAM")
 }
 
 fun findWord(x: Int, y: Int, dirX: Int, dirY: Int, wordIndex: Int): Boolean {
