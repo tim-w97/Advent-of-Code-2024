@@ -15,7 +15,7 @@ fun main() {
     repeat(width) { x ->
         val isMatch = findWord(
             x = x,
-            y = 1,
+            y = 0,
             wordIndex = 0
         )
 
@@ -37,7 +37,7 @@ fun findWord(x: Int, y: Int, wordIndex: Int): Boolean {
     if (getLetter(x, y) == searchWord[wordIndex]) {
         // Search again, but in all other directions
         return findWord(
-            x = x - 1,
+            x = x + 1,
             y = y,
             wordIndex = wordIndex + 1
         )
