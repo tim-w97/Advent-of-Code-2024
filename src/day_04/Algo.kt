@@ -9,20 +9,30 @@ val lines = File("src/day_04/input.txt").readLines()
 val width = lines[0].length
 val height = lines.size
 
-var count = 0
-
 fun main() {
-    repeat(width) { x ->
-        val isMatch = findWord(
-            x = x,
-            y = 0,
-            dirX = 1,
-            dirY = 0,
-            wordIndex = 0
-        )
+    var matches = 0
 
-        println(isMatch)
+    repeat(height) { y ->
+        repeat(width) { x ->
+            repeat(3) { dirY ->
+                repeat(3) { dirX ->
+                    val isMatch = findWord(
+                        x = x,
+                        y = y,
+                        dirX = dirX - 1,
+                        dirY = dirY - 1,
+                        wordIndex = 0
+                    )
+
+                    if (isMatch) {
+                        matches++
+                    }
+                }
+            }
+        }
     }
+
+    println(matches)
 }
 
 fun findWord(x: Int, y: Int, dirX: Int, dirY: Int, wordIndex: Int): Boolean {
