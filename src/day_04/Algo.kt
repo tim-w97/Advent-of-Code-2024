@@ -16,6 +16,8 @@ fun main() {
         val isMatch = findWord(
             x = x,
             y = 0,
+            dirX = 1,
+            dirY = 0,
             wordIndex = 0
         )
 
@@ -23,7 +25,7 @@ fun main() {
     }
 }
 
-fun findWord(x: Int, y: Int, wordIndex: Int): Boolean {
+fun findWord(x: Int, y: Int, dirX: Int, dirY: Int, wordIndex: Int): Boolean {
     // word is XMAS, we have a match!
     if (wordIndex == searchWord.length) {
         return true
@@ -35,10 +37,12 @@ fun findWord(x: Int, y: Int, wordIndex: Int): Boolean {
     }
 
     if (getLetter(x, y) == searchWord[wordIndex]) {
-        // Search again, but in all other directions
+        // Search again in another direction
         return findWord(
-            x = x + 1,
-            y = y,
+            x = x + dirX,
+            y = y + dirY,
+            dirX = dirX,
+            dirY = dirY,
             wordIndex = wordIndex + 1
         )
     }
