@@ -41,26 +41,6 @@ fun main() {
     println("X shaped MAS count: $xShapedMasCount")
 }
 
-fun isXShapedMas(x: Int, y: Int): Boolean {
-    if (x < 1 || x >= width - 1 || y < 1 || y >= height - 1) {
-        return false
-    }
-
-    val word1 = StringBuilder()
-        .append(getLetter(x - 1, y - 1))
-        .append(getLetter(x, y))
-        .append(getLetter(x + 1, y + 1))
-        .toString()
-
-    val word2 = StringBuilder()
-        .append(getLetter(x - 1, y + 1))
-        .append(getLetter(x, y))
-        .append(getLetter(x + 1, y - 1))
-        .toString()
-
-    return (word1 == "MAS" || word1 == "SAM") && (word2 == "MAS" || word2 == "SAM")
-}
-
 fun findWord(x: Int, y: Int, dirX: Int, dirY: Int, wordIndex: Int): Boolean {
     // word is XMAS, we have a match!
     if (wordIndex == searchWord.length) {
@@ -85,6 +65,26 @@ fun findWord(x: Int, y: Int, dirX: Int, dirY: Int, wordIndex: Int): Boolean {
 
     // one letter was wrong, we don't have a match :-(
     return false
+}
+
+fun isXShapedMas(x: Int, y: Int): Boolean {
+    if (x < 1 || x >= width - 1 || y < 1 || y >= height - 1) {
+        return false
+    }
+
+    val word1 = StringBuilder()
+        .append(getLetter(x - 1, y - 1))
+        .append(getLetter(x, y))
+        .append(getLetter(x + 1, y + 1))
+        .toString()
+
+    val word2 = StringBuilder()
+        .append(getLetter(x - 1, y + 1))
+        .append(getLetter(x, y))
+        .append(getLetter(x + 1, y - 1))
+        .toString()
+
+    return (word1 == "MAS" || word1 == "SAM") && (word2 == "MAS" || word2 == "SAM")
 }
 
 fun getLetter(x: Int, y: Int): Char = lines[y][x]
