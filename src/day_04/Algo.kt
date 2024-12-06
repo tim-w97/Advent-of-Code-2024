@@ -1,42 +1,50 @@
 package day_04
 
 import java.io.File
-import java.time.Year
+
+const val searchWord = "XMAS"
+
+val lines = File("src/day_04/input.txt").readLines()
+
+val width = lines[0].length
+val height = lines.size
+
+var count = 0
 
 fun main() {
-    val lines = File("src/day_04/input.txt").readLines()
-    val lineLength = lines[0].length
-    val searchWord = "XMAS"
-    var count = 0
+    repeat(width) { x ->
+        val isMatch = findWord(
+            x = x,
+            y = 1,
+            wordIndex = 0
+        )
 
-    // region find horizontal matches
-    for (line in lines) {
-        repeat(line.length - searchWord.length) { index ->
-            line.substring(index, index + searchWord.length).let { possibleWord ->
-                if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
-//                    count ++
-                }
-            }
-        }
+        println(isMatch)
     }
-    // endregion
-
-    // region find vertical matches
-    for (lineLengthIndex in lineLength - 1 downTo 0) {
-        repeat(lines.size - searchWord.length + 1) { lineIndex ->
-            var possibleWord = ""
-
-            repeat(searchWord.length) { wordIndex ->
-                possibleWord += lines[wordIndex + lineIndex][lineLengthIndex]
-            }
-
-            if (possibleWord == searchWord || possibleWord == searchWord.reversed()) {
-//                count ++
-            }
-        }
-    }
-    // endregion
-
-    // find diagonal matches
-
 }
+
+fun findWord(x: Int, y: Int, wordIndex: Int): Boolean {
+    // word is XMAS, we have a match!
+    if (wordIndex == searchWord.length) {
+        return true
+    }
+
+    // x or y is out of bounds
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+        return false
+    }
+
+    if (getLetter(x, y) == searchWord[wordIndex]) {
+        // Search again, but in all other directions
+        return findWord(
+            x = x - 1,
+            y = y,
+            wordIndex = wordIndex + 1
+        )
+    }
+
+    // one letter was wrong, we don't have a match :-(
+    return false
+}
+
+fun getLetter(x: Int, y: Int): Char = lines[y][x]
